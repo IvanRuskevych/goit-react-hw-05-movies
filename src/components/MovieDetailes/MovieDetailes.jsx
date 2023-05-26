@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 import moviesApi from 'services/movies-api';
 
 import css from './MovieDetailes.module.css';
@@ -7,9 +7,6 @@ import css from './MovieDetailes.module.css';
 export default function MovieDetailes() {
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
-
-  console.log(movie);
-  console.log(movieId);
 
   useEffect(() => {
     moviesApi.fetchMovieById(movieId).then(res => {
@@ -48,16 +45,17 @@ export default function MovieDetailes() {
         <h2 className={css.titleSecond}>Additional information</h2>
         <ul className={css.list}>
           <li>
-            <Link type="Link" to="">
+            <Link type="Link" to="cast">
               Cast
             </Link>
           </li>
           <li>
-            <Link type="Link" to="">
+            <Link type="Link" to="reviews">
               Reviews
             </Link>
           </li>
         </ul>
+        <Outlet />
       </div>
     </div>
   );
