@@ -24,7 +24,11 @@ export default function Cast() {
             {
               <>
                 <img
-                  src={`https://image.tmdb.org/t/p/w500/${profile_path}`}
+                  src={
+                    profile_path
+                      ? `https://image.tmdb.org/t/p/w500/${profile_path}`
+                      : 'https://www.ukrposhta.ua/uploads/photos/shares/15.03.2022/photo_2022_04_23_08_34_35.jpg'
+                  }
                   alt=""
                   className=""
                   width="375"
@@ -40,3 +44,5 @@ export default function Cast() {
     </ul>
   );
 }
+
+// https://www.ukrposhta.ua/uploads/photos/shares/15.03.2022/photo_2022_04_23_08_34_35.jpg

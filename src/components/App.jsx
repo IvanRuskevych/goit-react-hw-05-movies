@@ -5,18 +5,17 @@ import Movies from 'pages/Movies';
 import MovieDetailes from './MovieDetailes/MovieDetailes';
 import Cast from './Cast/Cast';
 import Reviews from './Reviews/Reviews';
-// import MoviesList from 'components/MoviesList';
 
 export const App = () => {
   return (
     <Routes>
       <Route path="/" element={<LayOut />}>
         <Route index element={<Home />} />
-        <Route path=":movieId" element={<MovieDetailes />}>
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/movies/:movieId" element={<MovieDetailes />}>
           <Route path="cast" element={<Cast />} />
           <Route path="reviews" element={<Reviews />} />
         </Route>
-        <Route path="/movies" element={<Movies />} />
         <Route />
       </Route>
     </Routes>

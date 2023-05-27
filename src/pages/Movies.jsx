@@ -1,5 +1,6 @@
+import MoviesList from 'components/MoviesList/MoviesList';
 import { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import moviesApi from 'services/movies-api';
 
 const Movies = () => {
@@ -18,9 +19,9 @@ const Movies = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // console.log(e.target.elements.query.value);
     const { value } = e.target.elements.query;
     setSearchParams({ query: value });
+    e.target.reset();
   };
 
   if (!movies) return;
@@ -30,13 +31,7 @@ const Movies = () => {
         <input type="text" name="query" />
         <button type="submit">button</button>
       </form>
-      <ul className="">
-        {movies.map(({ id, title }) => (
-          <li key={id} className="">
-            <Link to={`${id}`}> - {title}</Link>
-          </li>
-        ))}
-      </ul>
+      <MoviesList movies={movies} />
     </>
   );
 };
