@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
 import { useParams } from 'react-router-dom';
 import moviesApi from 'services/movies-api';
+import css from './Reviews.module.css';
 
 export default function Reviews() {
   const [reviews, setReviews] = useState(null);
@@ -9,7 +10,7 @@ export default function Reviews() {
 
   useEffect(() => {
     moviesApi.fetchMovieById(movieId, '/reviews').then(response => {
-      console.log(response.results);
+      // console.log(response.results);
       return setReviews(response.results);
     });
   }, [movieId]);
@@ -27,7 +28,7 @@ export default function Reviews() {
           <li key={nanoid(5)}>
             {
               <>
-                <h4>{`Author: ${author}`}</h4>
+                <h4 className={css.title}>{`Author: ${author}`}</h4>
                 <p>{content} </p>
               </>
             }

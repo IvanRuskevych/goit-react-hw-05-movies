@@ -1,3 +1,7 @@
+.container {
+  padding: 0 40px;
+}
+
 .image {
   width: 300px;
   height: 100%;
@@ -5,6 +9,8 @@
 
 .overviewWrap {
   display: flex;
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
 .overviewInfo {
@@ -25,4 +31,8 @@
   padding: 10px;
   display: grid;
   row-gap: 10px;
+}
+
+.item {
+  padding: 10px;
 }

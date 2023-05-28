@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import moviesApi from 'services/movies-api';
 
 import css from './MovieDetailes.module.css';
@@ -7,26 +7,32 @@ import css from './MovieDetailes.module.css';
 export default function MovieDetailes() {
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
+  const location = useLocation();
+  // console.log(location);
+  const backLinkLocationRef = useRef(location.state?.from ?? '/movies');
 
   useEffect(() => {
     moviesApi.fetchMovieById(movieId).then(res => {
-      console.log(res.backdrop_path);
+      // console.log(res.backdrop_path);
       setMovie(res);
     });
   }, [movieId]);
 
   if (!movie) return;
-  const { poster_path, title, overview, vote_average, genres } = movie;
+  const { poster_path, title, overview, vote_average } = movie;
+  const genres = movie.genres.map(genre => genre.name).join(', ');
+  const poster = poster_path
+    ? `https://image.tmdb.org/t/p/w500/${poster_path}`
+    : 'https://dummyimage.com/395x592/000/fff.jpg&text=MOVIE+POSTER+IS+NOT+DEFINED';
 
   return (
-    <div>
-      <p>`MovieDetailes: {movieId}</p>
-      <Link type="link" to="/">
+    <div className={css.container}>
+      <Link type="link" to={backLinkLocationRef.current} className={css.item}>
         Go back
       </Link>
       <div className={css.overviewWrap}>
         <img
-          src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+          src={poster}
           alt=""
           className={css.image}
           width="375"
@@ -38,7 +44,7 @@ export default function MovieDetailes() {
           <h2 className={css.titleSecond}>Overview</h2>
           <p>{overview}</p>
           <h2 className={css.titleSecond}>Genres</h2>
-          <p>{genres.map(genre => genre.name).join(', ')}</p>
+          <p>{genres}</p>
         </div>
       </div>
       <div>
@@ -55,7 +61,9 @@ export default function MovieDetailes() {
             </Link>
           </li>
         </ul>
-        <Outlet />
+        <Suspense fallback={<div>Loadding ...</div>}>
+          <Outlet />
+        </Suspense>
       </div>
     </div>
   );
